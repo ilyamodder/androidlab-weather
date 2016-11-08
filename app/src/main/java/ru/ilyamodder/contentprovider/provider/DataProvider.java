@@ -21,7 +21,7 @@ import ru.ilyamodder.contentprovider.sqlite.WeatherTable;
 
 public class DataProvider extends ContentProvider {
 
-    public static final String AUTHORITY = ContentProvider.class.getCanonicalName();
+    public static final String AUTHORITY = DataProvider.class.getCanonicalName();
 
     public static final Uri REQUESTS_URI = Uri.parse("content://" + AUTHORITY + "/" +
             RequestsTable.NAME);

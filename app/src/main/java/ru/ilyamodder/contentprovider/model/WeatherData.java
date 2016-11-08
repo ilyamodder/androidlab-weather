@@ -13,9 +13,9 @@ public class WeatherData {
     @SerializedName("list")
     private List<Day> mDays;
 
-    private class Day {
+    public class Day {
         @SerializedName("dt")
-        Date mDate;
+        long mDate;
         @SerializedName("speed")
         double mWindSpeed;
         @SerializedName("humidity")
@@ -23,7 +23,7 @@ public class WeatherData {
         @SerializedName("temp")
         Temp mTemp;
 
-        public Date getDate() {
+        public long getDate() {
             return mDate;
         }
 

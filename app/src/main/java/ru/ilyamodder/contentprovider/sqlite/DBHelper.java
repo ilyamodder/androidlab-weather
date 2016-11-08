@@ -17,14 +17,14 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.rawQuery("CREATE TABLE " + RequestsTable.NAME + " (" + RequestsTable.Columns._ID +
-            " STRING PRIMARY KEY, " + RequestsTable.Columns.RESP_CODE + " INT, " +
-            RequestsTable.Columns.URL + " TEXT)", null);
-        db.rawQuery("CREATE TABLE " + WeatherTable.NAME + " (" + WeatherTable.Columns._ID +
-                " INT PRIMARY KEY AUTOINCREMENT, " + WeatherTable.Columns.DATE + " DATE, " +
-                WeatherTable.Columns.HUMIDITY + " INT, " + WeatherTable.Columns.MAX_TEMP +
-                " INT, " + WeatherTable.Columns.MIN_TEMP + "INT, " +
-                WeatherTable.Columns.WIND_SPEED + " INT)", null);
+        db.execSQL("CREATE TABLE " + RequestsTable.NAME + " (" + RequestsTable.Columns._ID +
+            " INTEGER PRIMARY KEY, " + RequestsTable.Columns.RESP_CODE + " INTEGER, " +
+            RequestsTable.Columns.URL + " TEXT)");
+        db.execSQL("CREATE TABLE " + WeatherTable.NAME + " (" + WeatherTable.Columns._ID +
+                " INTEGER PRIMARY KEY, " + WeatherTable.Columns.DATE + " DATE, " +
+                WeatherTable.Columns.HUMIDITY + " INTEGER, " + WeatherTable.Columns.MAX_TEMP +
+                " INTEGER, " + WeatherTable.Columns.MIN_TEMP + " INTEGER, " +
+                WeatherTable.Columns.WIND_SPEED + " INTEGER)");
     }
 
     @Override
