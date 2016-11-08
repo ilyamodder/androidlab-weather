@@ -18,7 +18,7 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.rawQuery("CREATE TABLE " + RequestsTable.NAME + " (" + RequestsTable.Columns._ID +
-            " INT PRIMARY KEY AUTOINCREMENT, " + RequestsTable.Columns.RESP_CODE + " INT, " +
+            " STRING PRIMARY KEY, " + RequestsTable.Columns.RESP_CODE + " INT, " +
             RequestsTable.Columns.URL + " TEXT)", null);
         db.rawQuery("CREATE TABLE " + WeatherTable.NAME + " (" + WeatherTable.Columns._ID +
                 " INT PRIMARY KEY AUTOINCREMENT, " + WeatherTable.Columns.DATE + " DATE, " +
