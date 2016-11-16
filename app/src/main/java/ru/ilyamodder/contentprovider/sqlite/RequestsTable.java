@@ -1,5 +1,7 @@
 package ru.ilyamodder.contentprovider.sqlite;
 
+import android.provider.BaseColumns;
+
 /**
  * Created by ilya on 02.11.16.
  */

@@ -73,25 +73,33 @@ public class LoadingService extends IntentService {
                 cv.put(RequestsTable.Columns.RESP_CODE, response.code());
                 cv.put(RequestsTable.Columns.URL, call.request().url().toString());
                 getContentResolver().insert(DataProvider.REQUESTS_URI, cv);
+                getContentResolver().delete(DataProvider.WEATHER_URI, null, null);
 
-                List<ContentValues> weatherValues = new ArrayList<>();
-                for (WeatherData.Day day : data.getDays()) {
-                    ContentValues contentValues = new ContentValues();
-                    contentValues.put(WeatherTable.Columns.DATE, day.getDate());
-                    contentValues.put(WeatherTable.Columns.HUMIDITY, day.getHumidity());
-                    contentValues.put(WeatherTable.Columns.MAX_TEMP, day.getMaxTemp());
-                    contentValues.put(WeatherTable.Columns.MIN_TEMP, day.getMinTemp());
-                    contentValues.put(WeatherTable.Columns.WIND_SPEED, day.getWindSpeed());
-                    weatherValues.add(contentValues);
+                if (response.isSuccessful()) {
+                    List<ContentValues> weatherValues = new ArrayList<>();
+                    for (WeatherData.Day day : data.getDays()) {
+                        ContentValues contentValues = new ContentValues();
+                        contentValues.put(WeatherTable.Columns.DATE, day.getDate());
+                        contentValues.put(WeatherTable.Columns.HUMIDITY, day.getHumidity());
+                        contentValues.put(WeatherTable.Columns.MAX_TEMP, day.getMaxTemp());
+                        contentValues.put(WeatherTable.Columns.MIN_TEMP, day.getMinTemp());
+                        contentValues.put(WeatherTable.Columns.WIND_SPEED, day.getWindSpeed());
+                        weatherValues.add(contentValues);
+                    }
+                    getContentResolver().bulkInsert(DataProvider.WEATHER_URI, weatherValues.toArray(new ContentValues[0]));
+                    getContentResolver().notifyChange(ContentUris.withAppendedId(DataProvider.REQUESTS_URI, key), null);
                 }
-                getContentResolver().bulkInsert(DataProvider.WEATHER_URI, weatherValues.toArray(new ContentValues[0]));
-                getContentResolver().notifyChange(ContentUris.withAppendedId(DataProvider.REQUESTS_URI, key), null);
             }
 
             @Override
             public void onFailure(Call<WeatherData> call, Throwable t) {
                 Log.e("service", "fail");
                 t.printStackTrace();
+                ContentValues cv = new ContentValues();
+                cv.put(RequestsTable.Columns._ID, key);
+                cv.put(RequestsTable.Columns.RESP_CODE, 0);
+                cv.put(RequestsTable.Columns.URL, call.request().url().toString());
+                getContentResolver().insert(DataProvider.REQUESTS_URI, cv);
             }
         });
     }

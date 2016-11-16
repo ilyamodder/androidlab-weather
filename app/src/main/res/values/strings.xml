@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">ContentProvider</string>
+    <string name="loading_error">Произошла ошибка загрузки</string>
 </resources>

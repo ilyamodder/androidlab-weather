@@ -70,6 +70,15 @@ public class DataProvider extends ContentProvider {
             case URI_REQUESTS:
                 cursor = mDb.query(RequestsTable.NAME, projection, selection, selectionArgs, null, null, sortOrder);
                 break;
+            case URI_REQUEST:
+                String id = uri.getLastPathSegment();
+                if (TextUtils.isEmpty(selection)) {
+                    selection = RequestsTable.Columns._ID + "=" + id;
+                } else {
+                    selection += " AND " + RequestsTable.Columns._ID + "=" + id;
+                }
+                cursor = mDb.query(RequestsTable.NAME, projection, selection, selectionArgs, null, null, sortOrder);
+                break;
             case URI_WEATHER:
                 cursor = mDb.query(WeatherTable.NAME, projection, selection, selectionArgs, null, null, sortOrder);
                 break;
@@ -137,8 +146,10 @@ public class DataProvider extends ContentProvider {
                 } else {
                     selection += " AND " + WeatherTable.Columns._ID + "=" + id;
                 }
+                break;
             case URI_WEATHER:
                 table = WeatherTable.NAME;
+                break;
             default:
                 throw new IllegalArgumentException("Wrong uri: " + uri);
         }
@@ -170,8 +181,10 @@ public class DataProvider extends ContentProvider {
                 } else {
                     selection += " AND " + WeatherTable.Columns._ID + "=" + id;
                 }
+                break;
             case URI_WEATHER:
                 table = WeatherTable.NAME;
+                break;
             default:
                 throw new IllegalArgumentException("Wrong uri: " + uri);
         }
